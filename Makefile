@@ -76,3 +76,5 @@ tools/mtk-tools:
 clean:
 	cd busybox && make clean
 	rm -Rfv initrd initrd.gz
+
+.PHONY: $(PHONY)

@@ -31,6 +31,8 @@ build/fw.$(PLATFORM): $(SDK_PATH)/.built
 		build/initrd.$(PLATFORM)/ \
 		$@/boot.img
 
+
+PHONY+=$(SDK_PATH)
 	#cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/MBR ./fw/
 	#cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/EBR1 ./fw/
 	#cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/*.txt ./fw/
