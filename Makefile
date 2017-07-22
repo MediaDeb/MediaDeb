@@ -16,10 +16,16 @@ export PATH:=$(abspath build/$(TOOLCHAIN)/bin):$(PATH)
 $(info $===> $(PATH) | $(CROSS_COMPILE) | $(GNU_TARGET_NAME))
 
 
+
+
+# Phases
+
+init: build/.init build/$(PLATFORM).test
+	mkdir -p build
+
 build/$(PLATFORM).test:
 	$(CROSS_COMPILE)gcc --version > $@
 
-# Phases
 download: \
 	build/$(TOOLCHAIN).tgz \
 	build/bb.tgz \
