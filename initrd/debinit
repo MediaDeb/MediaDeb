@@ -1,0 +1,56 @@
+#!/bin/busybox sh
+
+echo '    WELCOME TO'
+echo '    _   __                                                         _      '
+echo '   / | / /__  ______________  ____ ___  ____ _____  ________  ____( )_____'
+echo '  /  |/ / _ \/ ___/ ___/ __ \/ __ `__ \/ __ `/ __ \/ ___/ _ \/ ___/// ___/'
+echo ' / /|  /  __/ /__/ /  / /_/ / / / / / / /_/ / / / / /__/  __/ /    (__  ) '
+echo '/_/ |_/\___/\___/_/   \____/_/ /_/ /_/\__,_/_/ /_/\___/\___/_/    /____/  '
+echo '    __  ___         ___       ____       __  '
+echo '   /  |/  /__  ____/ (_)___ _/ __ \___  / /_ '
+echo '  / /|_/ / _ \/ __  / / __ `/ / / / _ \/ __ \'
+echo ' / /  / /  __/ /_/ / / /_/ / /_/ /  __/ /_/ /'
+echo '/_/  /_/\___/\__,_/_/\__,_/_____/\___/_.___/ '
+echo "Starting up: $0"
+
+echo -n "Loading busybox applets..."
+/bin/busybox --install -s
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+echo "root:F7ZmeeVnV4r1Q:0:0:root:/root:/bin/sh" > /etc/passwd
+echo "[DONE]"
+
+
+rescue_shell() {
+    echo "Something went wrong. Dropping you into a cozy shell."
+    exec /bin/sh
+}
+
+debian() {
+    mount $ROOT /root
+    # Switch to the debian root
+    echo "Now, switching to debian rootfs..."
+    exec switch_root /root /sbin/init
+}
+
+# Prepare
+echo -n "Mounting kernel filesystems..."
+mount -t proc none /proc
+mount -t sysfs none /sys
+echo 0 > /proc/sys/kernel/printk
+echo "[DONE]"
+
+#Some platforms may have no devtmpfs, so we won't rely on it
+echo -n "Scanning for devices..."
+mdev -s
+echo "[DONE]"
+
+echo -n "Running platform setup script"
+. /bin/init.sh
+echo "[DONE]"
+
+echo "Failsafe: Waiting for 10 seconds for an emergency login"
+echo -e "\n\r\n\r\n" > /dev/ttyGS0
+getty -L -t 10 115200 /dev/ttyGS0
+
+mount $ROOT /root
+exec switch_root /root /lib/systemd/systemd
