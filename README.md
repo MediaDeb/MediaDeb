@@ -29,6 +29,8 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 |          |               | Magnetometer    | ?           |
 |          |               | Flashlight      | ?           |
 
+\* Battery Hack is a mod to the PMIC driver that changes the maximum voltage
+for the battery from 4-4.2 volts to 3.7-3.8 volts. This allows to avoid 'bloating' batteries when you keep your phone always charged.
 
 # How to build
 

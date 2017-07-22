@@ -33,7 +33,7 @@ download: \
 	$(PLATFORM_DOWNLOADS)
 
 unpack: build/bb.$(PLATFORM) build/$(TOOLCHAIN) $(PLATFORM_UNPACK)
-build: build/$(PLATFORM).test build/initrd-$(PLATFORM) build/bb.$(PLATFORM)/.built $(PLATFORM_BUILD)
+build: build/$(PLATFORM).test build/initrd.$(PLATFORM) build/bb.$(PLATFORM)/.built $(PLATFORM_BUILD)
 
 build/$(TOOLCHAIN).tgz:
 	wget -c $(TOOLCHAIN_URL) -O $@
