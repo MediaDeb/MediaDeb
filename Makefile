@@ -20,7 +20,11 @@ build/$(PLATFORM).test:
 	$(CROSS_COMPILE)gcc --version > $@
 
 # Phases
-download: build/$(TOOLCHAIN).tgz build/bb.tgz $(PLATFORM_DOWNLOADS)
+download: \
+	build/$(TOOLCHAIN).tgz \
+	build/bb.tgz \
+	$(PLATFORM_DOWNLOADS)
+
 unpack: build/bb.$(PLATFORM) build/$(TOOLCHAIN) $(PLATFORM_UNPACK)
 build: build/$(PLATFORM).test build/initrd-$(PLATFORM) build/bb.$(PLATFORM)/.built $(PLATFORM_BUILD)
 
@@ -41,7 +45,7 @@ build/$(TOOLCHAIN): build/$(TOOLCHAIN).tgz
 
 #Build
 build/bb.$(PLATFORM)/.built: build/bb.$(PLATFORM) build/$(PLATFORM).test
-	cd $< && cp $(SOURCE_DIR)/bb_conf .config && \
+	cd $< && cp $(SOURCE_DIR)/tools/bb_conf .config && \
 	make
 	touch $@
 
@@ -53,6 +57,11 @@ build/initrd.$(PLATFORM): build/bb.$(PLATFORM)/.built
 	cp initrd/debinit $@/sbin/init
 	cp platforms/umi-x2/bin/*  $@/bin/
 	cp platforms/umi-x2/etc/*  $@/etc/
+
+
+#submodules
+tools/mtk-tools:
+		git submodule init $@
 
 #initrd.gz: initrd
 #	cd initrd && find . | cpio -o -c | gzip -9 > ../$@
