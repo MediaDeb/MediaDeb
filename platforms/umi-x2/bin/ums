@@ -1,0 +1,7 @@
+#!/bin/busybox sh
+
+# Enable UMS
+cd /sys/class/android_usb/f_mass_storage/lun
+echo /dev/mmcblk0 > file
+cd /sys/class/android_usb/f_mass_storage/lun1
+echo /dev/mmcblk1 > file
