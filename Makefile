@@ -19,11 +19,12 @@ $(info $===> $(PATH) | $(CROSS_COMPILE) | $(GNU_TARGET_NAME))
 
 
 # Phases
+init: build/.init
 
-init: build/.init build/$(PLATFORM).test
+build/.init:
 	mkdir -p build
 
-build/$(PLATFORM).test:
+build/$(PLATFORM).test: build/.init
 	$(CROSS_COMPILE)gcc --version > $@
 
 download: \
