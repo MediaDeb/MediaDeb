@@ -1,9 +1,6 @@
-[submodule "mtk-tools"]
-	path = mtk-tools
-	url = https://github.com/bgcngm/mtk-tools.git
-[submodule "mkbootimg_tools"]
-	path = mkbootimg_tools
-	url = https://github.com/xiaolu/mkbootimg_tools.git
 [submodule "vendor_crapware/aquaris-5HD"]
 	path = vendor_crapware/aquaris-5HD
 	url = https://github.com/MediaDeb/aquaris-5HD.git
+[submodule "tools/mtk-tools"]
+	path = tools/mtk-tools
+	url = https://github.com/bgcngm/mtk-tools.git
