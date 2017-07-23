@@ -1,0 +1,13 @@
+                   _..-------++._                    
+              _.-'/ |      _||  \"--._              
+        __.--'`._/_\j_____/_||___\    `----.        
+   _.--'_____    |          \     _____    /        
+ _j    /,---.\   |        =o |   /,---.\   |_       
+[__]==// .-. \\==`===========/==// .-. \\=[__]      
+  `-._|\ `-' /|___\_________/___|\ `-' /|_.'     hjw
+        `---'                     `---'             
+    Welcome to MediaDeb emergency initrd!
+    Helpfull commands:
+        
+    ums  - Will export both SD cards to PC as mass storage
+    exit - Will terminate the shell and resume boot

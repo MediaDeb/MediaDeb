@@ -1,0 +1,14 @@
+#This Skyfile will be included by the upper level
+
+
+#DHCP on the usb ethernet iface 
+IFACE_DHCP rndis0
+
+# Enable console on USB gadget device
+RUN systemctl enable serial-getty@ttyGS0.service
+
+#Allow root login on ttyGS0 & ttyMT0
+RUN "echo ttyMT0 >> /etc/securetty"
+RUN "echo ttyGS0 >> /etc/securetty"
+EXT4IMAGE 2GB rootfs.img
+

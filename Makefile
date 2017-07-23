@@ -1,6 +1,6 @@
 PLATFORM?=umi-x2
 
-all: firmware
+all: build
 include platforms/$(PLATFORM)/platform.mk
 
 ifeq ($(TOOLCHAIN),arm-module-linux-gnueabi)
@@ -13,6 +13,7 @@ endif
 SOURCE_DIR=$(abspath .)
 export PATH:=$(abspath build/$(TOOLCHAIN)/bin):$(PATH)
 
+SUBMODULES+=tools/skyforge
 # Phases
 init: build/.init
 
@@ -28,7 +29,7 @@ build/$(PLATFORM).test: build/.init build/$(TOOLCHAIN)
 download:
 	build/$(TOOLCHAIN).tgz \
 	build/bb.tgz \
-	tools/skyforge \
+	build/.submodules.$(PLATFORM)
 	$(PLATFORM_DOWNLOADS)
 
 unpack: build/bb.$(PLATFORM) build/$(TOOLCHAIN) $(PLATFORM_UNPACK)
@@ -36,6 +37,11 @@ build: unpack build/initrd.$(PLATFORM) $(PLATFORM_BUILD)
 
 build/$(TOOLCHAIN).tgz: build/.init
 	wget -c "$(TOOLCHAIN_URL)" -O $@
+	touch $@
+
+
+build/.submodules.$(PLATFORM):
+	$(foreach s,$(SUBMODULES),git submodule update --init $(s);)
 	touch $@
 
 build/bb.tgz: build/.init
@@ -69,22 +75,19 @@ build/fw.$(PLATFORM):
 	mkdir -p $@
 	cp -Rfv platforms/$(PLATFORM)/skeleton/* $@/
 
-build/rootfs:
+build/rootfs.$(PLATFORM):
 	mkdir -p $@
-	cp -Rfv rootfs/* build/rootfs/
-	cp -Rfv platforms/$(PLATFORM)/rootfs/* build/rootfs/
+	cp -Rfv rootfs/* $@
+	cp -Rfv platforms/$(PLATFORM)/rootfs/* $@
 
-build/rootfs/.built: build/rootfs tools/skyforge
-	cd build/rootfs && sudo ../../tools/skyforge/skyforge build
-	cd build/rootfs && sudo ../../tools/skyforge/skyforge clean
+build/rootfs.$(PLATFORM)/.built: build/rootfs.$(PLATFORM) tools/skyforge
+	cd build/rootfs.$(PLATFORM) && sudo ../../tools/skyforge/skyforge build
+	cd build/rootfs.$(PLATFORM) && sudo ../../tools/skyforge/skyforge clean
 	touch $@
 
-#submodules
-tools/mtk-tools:
-	git submodule update --init $@
 
-tools/skyforge:
-	git submodule update --init $@
+
+
 
 clean:
 	cd busybox && make clean

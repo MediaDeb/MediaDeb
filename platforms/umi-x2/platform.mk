@@ -13,10 +13,9 @@ PLATFORM_KERNEL_VERSION=3.4.67
 #Debian architecture for rootfs
 PLATFORM_DEBARCH=armhf
 
-#Checkout submodule
-$(SDK_PATH):
-	[ -f $@/voodoo ] || git submodule update --init $@
+SUBMODULES+=tools/mtk-tools $(SDK_PATH)
 
+#Check out branch
 $(SDK_PATH)-umi-x2:
 	rm -f $(SDK_PATH)/.built
 	cd $(SDK_PATH) && git checkout $(PLATFORM)
@@ -29,7 +28,7 @@ $(SDK_PATH)/.built:
 
 build/fw.$(PLATFORM)/.install: \
 			build/initrd.$(PLATFORM) \
-			build/rootfs/.built \
+			build/rootfs.$(PLATFORM)/.built \
 			build/fw.$(PLATFORM) \
 			$(SDK_PATH)/.built
 	cp $(SDK_PATH)/out/target/product/lcsh89_wet_kk/kernel_lcsh89_wet_kk.bin \
@@ -41,7 +40,7 @@ build/fw.$(PLATFORM)/.install: \
 	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/MBR   build/fw.$(PLATFORM)/
 	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/EBR1  build/fw.$(PLATFORM)/
 	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/*.txt build/fw.$(PLATFORM)/
-	cp -f build/rootfs/rootfs.img build/fw.$(PLATFORM)/system.img
+	cp -f build/rootfs.$(PLATFORM)/rootfs.img build/fw.$(PLATFORM)/system.img
 	#These confuse SP Flash tool
 	rm build/fw.$(PLATFORM)/boot-args.txt
 	rm build/fw.$(PLATFORM)/boot-kernel.img
