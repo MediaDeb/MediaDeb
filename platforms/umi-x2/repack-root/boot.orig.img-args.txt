@@ -1,7 +1,0 @@
---base 0x10000000
---pagesize 2048
---kernel_offset 0x00008000
---ramdisk_offset 0x01000000
---second_offset 0x00f00000
---tags_offset 0x00000100
---board 1382571566

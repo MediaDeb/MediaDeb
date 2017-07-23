@@ -10,7 +10,7 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 
 # Supported devices
 
-| SoC      |   Device      |
+| SoC      |   Device      | Feature         | Status      |
 |----------|:-------------:|:----------------|------------:|
 | MT6589   |  UMI X2       | Supported       | Yes         |
 |          |               | Platform        | umi-x2      |

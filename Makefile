@@ -6,40 +6,41 @@ include platforms/$(PLATFORM)/platform.mk
 ifeq ($(TOOLCHAIN),arm-module-linux-gnueabi)
 	export CROSS_COMPILE:=$(abspath build)/$(TOOLCHAIN)/bin/$(TOOLCHAIN)-
 	export GNU_TARGET_NAME:=$(TOOLCHAIN)
-	TOOLCHAIN_URL:=https://module.ru/mb7707/ci/toolchains/old/old/arm-module-linux-gnueabi.tgz
+	TOOLCHAIN_URL:=https://cloud.ncrmnt.org/index.php/s/7hYjCqbJgMcVYFe/download?path=%2F&files=arm-module-linux-gnueabi.tgz
 endif
 
 
 SOURCE_DIR=$(abspath .)
 export PATH:=$(abspath build/$(TOOLCHAIN)/bin):$(PATH)
 
-$(info $===> $(PATH) | $(CROSS_COMPILE) | $(GNU_TARGET_NAME))
-
-
-
-
 # Phases
 init: build/.init
 
 build/.init:
 	mkdir -p build
+	touch $@
 
-build/$(PLATFORM).test: build/.init
-	$(CROSS_COMPILE)gcc --version > $@
+build/$(PLATFORM).test: build/.init build/$(TOOLCHAIN)
+	cd build && echo "int main(){} " | $(CROSS_COMPILE)gcc -x c -
+	scripts/check_version.sh build/a.out $(PLATFORM_KERNEL_VERSION)
+	touch $@
 
-download: \
+download:
 	build/$(TOOLCHAIN).tgz \
 	build/bb.tgz \
+	tools/skyforge \
 	$(PLATFORM_DOWNLOADS)
 
 unpack: build/bb.$(PLATFORM) build/$(TOOLCHAIN) $(PLATFORM_UNPACK)
-build: build/$(PLATFORM).test build/initrd.$(PLATFORM) build/bb.$(PLATFORM)/.built $(PLATFORM_BUILD)
+build: unpack build/initrd.$(PLATFORM) $(PLATFORM_BUILD)
 
-build/$(TOOLCHAIN).tgz:
-	wget -c $(TOOLCHAIN_URL) -O $@
+build/$(TOOLCHAIN).tgz: build/.init
+	wget -c "$(TOOLCHAIN_URL)" -O $@
+	touch $@
 
-build/bb.tgz:
+build/bb.tgz: build/.init
 	wget -c https://busybox.net/downloads/busybox-1.26.2.tar.bz2 -O $@
+	touch $@
 
 #Unpack phase
 build/bb.$(PLATFORM): build/bb.tgz
@@ -48,30 +49,32 @@ build/bb.$(PLATFORM): build/bb.tgz
 
 build/$(TOOLCHAIN): build/$(TOOLCHAIN).tgz
 	mkdir -p $(@)
-	tar vxpf $< --strip-components=2 -C $(@)
+	tar vxpf $< --strip-components=1 -C $(@)
 
 #Build
-build/bb.$(PLATFORM)/.built: build/bb.$(PLATFORM) build/$(PLATFORM).test
+build/bb.$(PLATFORM)/busybox: build/bb.$(PLATFORM) build/$(PLATFORM).test
 	cd $< && cp $(SOURCE_DIR)/tools/bb_conf .config && \
 	make
-	touch $@
 
-build/initrd.$(PLATFORM): build/bb.$(PLATFORM)/.built
+build/initrd.$(PLATFORM): build/bb.$(PLATFORM)/busybox
 	mkdir -p $@
 	cd $@ && mkdir -p bin etc sbin proc sys dev tmp root usr/bin usr/sbin mnt
 	cp -f build/bb.$(PLATFORM)/busybox $@/bin
 	cp initrd/debinit $@/init
 	cp initrd/debinit $@/sbin/init
-	cp platforms/umi-x2/bin/*  $@/bin/
-	cp platforms/umi-x2/etc/*  $@/etc/
+	cp platforms/$(PLATFORM)/bin/*  $@/bin/
+	cp platforms/$(PLATFORM)/etc/*  $@/etc/
 
+build/fw.$(PLATFORM):
+	mkdir -p $@
+	cp -Rfv platforms/$(PLATFORM)/skeleton/* $@/
 
 #submodules
 tools/mtk-tools:
-		git submodule init $@
+	git submodule update --init $@
 
-#initrd.gz: initrd
-#	cd initrd && find . | cpio -o -c | gzip -9 > ../$@
+tools/skyforge:
+	git submodule update --init $@
 
 clean:
 	cd busybox && make clean

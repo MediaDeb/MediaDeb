@@ -7,8 +7,9 @@ PLATFORM_DOWNLOADS:=$(SDK_PATH) tools/mtk-tools
 #Provide any additional rules to for unpack phase
 PLATFORM_UNPACK:=$(SDK_PATH)-umi-x2
 #Provide any additional rules to for build phase
-PLATFORM_BUILD:=$(SDK_PATH)/.built
-
+PLATFORM_BUILD:=build/fw.$(PLATFORM)/.install
+#Fill in kernel version. Needed for automatic checks
+PLATFORM_KERNEL_VERSION=3.4.67
 
 #Checkout submodule
 $(SDK_PATH):
@@ -24,15 +25,19 @@ $(SDK_PATH)/.built:
 	cd $(SDK_PATH) && env -i CROSS_COMPILE=$(CROSS_COMPILE) ./voodoo
 	touch $@
 
-build/fw.$(PLATFORM): $(SDK_PATH)/.built
-	mkdir $@
+build/fw.$(PLATFORM)/.install: build/initrd.$(PLATFORM) build/fw.$(PLATFORM) $(SDK_PATH)/.built
+	cp $(SDK_PATH)/out/target/product/lcsh89_wet_kk/kernel_lcsh89_wet_kk.bin \
+		build/fw.$(PLATFORM)/boot-kernel.img
 	tools/mtk-tools/repack-MTK.pl \
-		-boot $(SDK_PATH)/out/target/product/lcsh89_wet_kk/kernel_lcsh89_wet_kk.bin \
+		-boot build/fw.$(PLATFORM)/boot-kernel.img \
 		build/initrd.$(PLATFORM)/ \
-		$@/boot.img
-
+		build/fw.$(PLATFORM)/boot.img
+	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/MBR   build/fw.$(PLATFORM)/
+	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/EBR1  build/fw.$(PLATFORM)/
+	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/*.txt build/fw.$(PLATFORM)/
+	#These confuse SP Flash tool
+	rm build/fw.$(PLATFORM)/boot-args.txt
+	rm build/fw.$(PLATFORM)/boot-kernel.img
+	touch $@
 
 PHONY+=$(SDK_PATH)
-	#cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/MBR ./fw/
-	#cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/EBR1 ./fw/
-	#cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/*.txt ./fw/

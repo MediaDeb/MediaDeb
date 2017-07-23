@@ -44,13 +44,17 @@ echo -n "Scanning for devices..."
 mdev -s
 echo "[DONE]"
 
-echo -n "Running platform setup script"
-. /bin/init.sh
+echo -n "Running platform setup script (pre)"
+. /bin/init.pre.sh
 echo "[DONE]"
 
 echo "Failsafe: Waiting for 10 seconds for an emergency login"
 echo -e "\n\r\n\r\n" > /dev/ttyGS0
 getty -L -t 10 115200 /dev/ttyGS0
+
+echo -n "Running platform setup script (post)"
+. /bin/init.post.sh
+echo "[DONE]"
 
 mount $ROOT /root
 exec switch_root /root /lib/systemd/systemd

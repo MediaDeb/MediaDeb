@@ -4,3 +4,6 @@
 [submodule "tools/mtk-tools"]
 	path = tools/mtk-tools
 	url = https://github.com/bgcngm/mtk-tools.git
+[submodule "tools/skyforge"]
+	path = tools/skyforge
+	url = https://github.com/RC-MODULE/skyforge
