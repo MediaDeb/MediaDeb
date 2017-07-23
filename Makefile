@@ -69,6 +69,16 @@ build/fw.$(PLATFORM):
 	mkdir -p $@
 	cp -Rfv platforms/$(PLATFORM)/skeleton/* $@/
 
+build/rootfs:
+	mkdir -p $@
+	cp -Rfv rootfs/* build/rootfs/
+	cp -Rfv platforms/$(PLATFORM)/rootfs/* build/rootfs/
+
+build/rootfs/.built: build/rootfs tools/skyforge
+	cd build/rootfs && sudo ../../tools/skyforge/skyforge build
+	cd build/rootfs && sudo ../../tools/skyforge/skyforge clean
+	touch $@
+
 #submodules
 tools/mtk-tools:
 	git submodule update --init $@

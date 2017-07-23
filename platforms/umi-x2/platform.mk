@@ -10,6 +10,8 @@ PLATFORM_UNPACK:=$(SDK_PATH)-umi-x2
 PLATFORM_BUILD:=build/fw.$(PLATFORM)/.install
 #Fill in kernel version. Needed for automatic checks
 PLATFORM_KERNEL_VERSION=3.4.67
+#Debian architecture for rootfs
+PLATFORM_DEBARCH=armhf
 
 #Checkout submodule
 $(SDK_PATH):
@@ -25,7 +27,11 @@ $(SDK_PATH)/.built:
 	cd $(SDK_PATH) && env -i CROSS_COMPILE=$(CROSS_COMPILE) ./voodoo
 	touch $@
 
-build/fw.$(PLATFORM)/.install: build/initrd.$(PLATFORM) build/fw.$(PLATFORM) $(SDK_PATH)/.built
+build/fw.$(PLATFORM)/.install: \
+			build/initrd.$(PLATFORM) \
+			build/rootfs/.built \
+			build/fw.$(PLATFORM) \
+			$(SDK_PATH)/.built
 	cp $(SDK_PATH)/out/target/product/lcsh89_wet_kk/kernel_lcsh89_wet_kk.bin \
 		build/fw.$(PLATFORM)/boot-kernel.img
 	tools/mtk-tools/repack-MTK.pl \
@@ -35,6 +41,7 @@ build/fw.$(PLATFORM)/.install: build/initrd.$(PLATFORM) build/fw.$(PLATFORM) $(S
 	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/MBR   build/fw.$(PLATFORM)/
 	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/EBR1  build/fw.$(PLATFORM)/
 	cp -f $(SDK_PATH)/out/target/product/lcsh89_wet_kk/*.txt build/fw.$(PLATFORM)/
+	cp -f build/rootfs/rootfs.img build/fw.$(PLATFORM)/system.img
 	#These confuse SP Flash tool
 	rm build/fw.$(PLATFORM)/boot-args.txt
 	rm build/fw.$(PLATFORM)/boot-kernel.img

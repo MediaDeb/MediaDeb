@@ -1,0 +1,17 @@
+# This file shows a simple debian armel rootfs creation process
+#
+
+MULTISTRAP armhf debian-base.conf
+RUN DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C /var/lib/dpkg/info/dash.preinst install
+RUN DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C dpkg --configure -a
+
+#Basic system setup
+PASSWD 12345678
+HOSTNAME eldershade
+LOCALE en_US.UTF8 UTF8
+
+#Enable root access over ssh
+RUN sed "'s/PermitRootLogin without-password/PermitRootLogin yes/'" -i etc/ssh/sshd_config
+
+INCLUDE Skyfile.platform
+RUN touch /etc/fstab
