@@ -7,3 +7,9 @@
 [submodule "tools/skyforge"]
 	path = tools/skyforge
 	url = https://github.com/RC-MODULE/skyforge
+[submodule "vendor_crapware/MT6592-KK-KERNEL"]
+	path = vendor_crapware/MT6592-KK-KERNEL
+	url = https://github.com/MediaDeb/MT6592-KK-KERNEL.git
+[submodule "vendor_crapware/MT65x2_kernel_lk"]
+	path = vendor_crapware/MT65x2_kernel_lk
+	url = https://github.com/MediaDeb/MT65x2_kernel_lk.git

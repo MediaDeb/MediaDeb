@@ -29,6 +29,26 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 |          |               | Magnetometer    | ?           |
 |          |               | Flashlight      | ?           |
 
+| SoC      |   Device      | Feature         | Status      |
+|----------|:-------------:|:----------------|------------:|
+| MT6592   |  iOcean X8    | Supported       | Yes         |
+|          |               | Platform        | iocean-x8   |
+|          |               | Kernel          | 3.4.67      |
+|          |               | WiFi            | ?           |
+|          |               | Display         | NO          |
+|          |               | Battery Hack*   | NO          |
+|          |               | USB Client      | YES         |
+|          |               | USB Host        | No, possible|
+|          |               | UART            | NO Pads     |
+|          |               | FM              | ?           |
+|          |               | BT              | ?           |
+|          |               | Sound           | ?           |
+|          |               | Camera          | ?           |
+|          |               | Modem           | ?           |
+|          |               | Magnetometer    | ?           |
+|          |               | Flashlight      | ?           |
+
+
 \* Battery Hack is a mod to the PMIC driver that changes the maximum voltage
 for the battery from 4-4.2 volts to 3.7-3.8 volts. This allows to avoid 'bloating' batteries when you keep your phone always charged.
 
@@ -58,7 +78,25 @@ Check the table above for available platforms
 
 - Make yourself familiar with firmware compilation and packaging process. This may be tricky.
 
-- Disable CONFIG_ANDROID_PARANOID_NETWORKING in kernel config.
+- Add this to the end of the kernel config. This should do the minimal trick.
+```
+CONFIG_DEVTMPFS=y
+DEVTMPFS_MOUNT=y
+CONFIG_CGROUPS=y
+CONFIG_INOTIFY_USER=y
+CONFIG_SIGNALFD=y
+CONFIG_TIMERFD=y
+CONFIG_EPOLL=y
+CONFIG_NET=y
+CONFIG_SYSFS=y
+CONFIG_PROC_FS=y
+CONFIG_FHANDLE=y
+CONFIG_CRYPTO_USER_API_HASH=y
+CONFIG_CRYPTO_HMAC=y
+CONFIG_CRYPTO_SHA256=y
+CONFIG_SYSFS_DEPRECATED=n
+CONFIG_ANDROID_PARANOID_NETWORK=n
+```
 
 - Consult [Systemd README](https://github.com/systemd/systemd/blob/master/README#L34) and add required options for it to work.
 
