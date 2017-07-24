@@ -41,7 +41,6 @@ build/fw.$(PLATFORM)/.install: \
 		build/fw.$(PLATFORM)/boot.img
 	cp -f $(SDK_PATH)/out/target/product/$(PRODUCT)/MBR   build/fw.$(PLATFORM)/
 	cp -f $(SDK_PATH)/out/target/product/$(PRODUCT)/EBR1  build/fw.$(PLATFORM)/
-	cp -f $(SDK_PATH)/out/target/product/$(PRODUCT)/EBR2  build/fw.$(PLATFORM)/
 	cp -f $(SDK_PATH)/out/target/product/$(PRODUCT)/*.txt build/fw.$(PLATFORM)/
 	cp -f build/rootfs.$(PLATFORM)/rootfs.img build/fw.$(PLATFORM)/system.img
 	#These confuse SP Flash tool
