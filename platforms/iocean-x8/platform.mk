@@ -18,7 +18,7 @@ SUBMODULES+=tools/mtk-tools $(SDK_PATH)
 PRODUCT=wiko
 
 #Check out branch
-$(SDK_PATH)-checkout:
+$(SDK_PATH)-checkout: build/.submodules.$(PLATFORM)
 	rm -f $(SDK_PATH)/.built
 	cd $(SDK_PATH) && git checkout $(PLATFORM)
 

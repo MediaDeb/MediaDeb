@@ -16,7 +16,7 @@ PLATFORM_DEBARCH=armhf
 SUBMODULES+=tools/mtk-tools $(SDK_PATH)
 
 #Check out branch
-$(SDK_PATH)-umi-x2:
+$(SDK_PATH)-umi-x2: build/.submodules.$(PLATFORM)
 	rm -f $(SDK_PATH)/.built
 	cd $(SDK_PATH) && git checkout $(PLATFORM)
 
