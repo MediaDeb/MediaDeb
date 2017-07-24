@@ -24,7 +24,7 @@ $(SDK_PATH)-checkout:
 
 # Filthy mediatek build scripts require a clean environment
 # Without any toplevel make leftovers
-$(SDK_PATH)/.built:
+$(SDK_PATH)/.built: build/.submodules.$(PLATFORM)
 	cd $(SDK_PATH) && env -i CROSS_COMPILE=$(CROSS_COMPILE) ./mk $(PRODUCT) n k
 	touch $@
 
