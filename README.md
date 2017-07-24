@@ -39,7 +39,7 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 |          |               | Battery Hack*   | NO          |
 |          |               | USB Client      | YES         |
 |          |               | USB Host        | No, possible|
-|          |               | UART            | NO Pads     |
+|          |               | UART            | NO           |
 |          |               | FM              | ?           |
 |          |               | BT              | ?           |
 |          |               | Sound           | ?           |
@@ -81,7 +81,7 @@ Check the table above for available platforms
 - Add this to the end of the kernel config. This should do the minimal trick.
 ```
 CONFIG_DEVTMPFS=y
-DEVTMPFS_MOUNT=y
+CONFIG_DEVTMPFS_MOUNT=y
 CONFIG_CGROUPS=y
 CONFIG_INOTIFY_USER=y
 CONFIG_SIGNALFD=y
@@ -96,6 +96,7 @@ CONFIG_CRYPTO_HMAC=y
 CONFIG_CRYPTO_SHA256=y
 CONFIG_SYSFS_DEPRECATED=n
 CONFIG_ANDROID_PARANOID_NETWORK=n
+CONFIG_EXT4_FS_XATTR=y
 ```
 
 - Consult [Systemd README](https://github.com/systemd/systemd/blob/master/README#L34) and add required options for it to work.

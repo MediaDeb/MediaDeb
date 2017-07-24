@@ -32,7 +32,8 @@ build/fw.$(PLATFORM)/.install: \
 			build/initrd.$(PLATFORM) \
 			build/rootfs.$(PLATFORM)/.built \
 			build/fw.$(PLATFORM) \
-			$(SDK_PATH)/.built
+
+#			$(SDK_PATH)/.built
 	cp $(SDK_PATH)/out/target/product/$(PRODUCT)/kernel_$(PRODUCT).bin \
 		build/fw.$(PLATFORM)/boot-kernel.img
 	tools/mtk-tools/repack-MTK.pl \
@@ -41,6 +42,7 @@ build/fw.$(PLATFORM)/.install: \
 		build/fw.$(PLATFORM)/boot.img
 	cp -f $(SDK_PATH)/out/target/product/$(PRODUCT)/MBR   build/fw.$(PLATFORM)/
 	cp -f $(SDK_PATH)/out/target/product/$(PRODUCT)/EBR1  build/fw.$(PLATFORM)/
+	cp -f $(SDK_PATH)/out/target/product/$(PRODUCT)/EBR2  build/fw.$(PLATFORM)/
 	cp -f $(SDK_PATH)/out/target/product/$(PRODUCT)/*.txt build/fw.$(PLATFORM)/
 	cp -f build/rootfs.$(PLATFORM)/rootfs.img build/fw.$(PLATFORM)/system.img
 	#These confuse SP Flash tool
