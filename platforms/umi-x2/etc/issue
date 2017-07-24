@@ -6,8 +6,13 @@
 [__]==// .-. \\==`===========/==// .-. \\=[__]      
   `-._|\ `-' /|___\_________/___|\ `-' /|_.'     hjw
         `---'                     `---'             
-    Welcome to MediaDeb emergency initrd!
+    Welcome to MediaDeb emergency initrd for UMI-X2!
     Helpfull commands:
         
     ums  - Will export both SD cards to PC as mass storage
     exit - Will terminate the shell and resume boot
+
+Login with username 'root' and empty password or wait 10 seconds 
+for the system to resume boot. 
+
+

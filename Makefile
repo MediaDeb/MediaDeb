@@ -75,7 +75,7 @@ build/fw.$(PLATFORM):
 	mkdir -p $@
 	cp -Rfv platforms/$(PLATFORM)/skeleton/* $@/
 
-build/rootfs.$(PLATFORM):
+build/rootfs.$(PLATFORM): build/.submodules.$(PLATFORM)
 	mkdir -p $@
 	cp -Rfv rootfs/* $@
 	cp -Rfv platforms/$(PLATFORM)/rootfs/* $@
