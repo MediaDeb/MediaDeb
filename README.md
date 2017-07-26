@@ -1,3 +1,5 @@
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/MediaDeb)
+
 # What is MediaDeb ?
 
 Ever had an old cheap cellphone? Perhaps with a broken screen/sim slot/barely alive battery? With MediaDeb you can turn it into a Raspberry Pi-like SBC.
