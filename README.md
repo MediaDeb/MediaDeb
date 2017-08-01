@@ -58,21 +58,37 @@ for the battery from 4-4.2 volts to 3.7-3.8 volts. This allows to avoid 'bloatin
 
 - System Requirements.
     1. A recent Debian Stretch or Debian jessie linux distro
-    2. Development packages: multistrap build-essential
+    2. Development packages: multistrap build-essential cmake
     3. Caffeine
+
 - Clone the MediaDeb repository.
 
-_DO NOT UPDATE SUBMODULES OR YOU RISK BLOATING YOUR FILESSYSTEM WITH USELESS STUFF_
 
 ```
 git clone https://github.com/nekromant/MediaDeb.git
 ```
 
-- Run make PLATFORM=umi-x2
+- Create a build directory and configure the build
 
-Check the table above for available platforms
+```
+mkdir build
+cd build
+cmake .. -DDEVICE_NAME=iocean-x8
+```
 
-- Get your firmware in build/fw.platform_name
+Check the table above for available devices
+
+- Run 'make'
+
+```
+make
+```
+
+- Grab yourself a coffee, this will take a while
+
+- Get your firmware in build/firmware and flash it with SP Flash Tool
+
+- PROFIT!
 
 # How to port
 
