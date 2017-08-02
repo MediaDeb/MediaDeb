@@ -87,8 +87,8 @@ ExternalProject_Add (rootfs
     DOWNLOAD_COMMAND cp -Rfv ${CMAKE_SOURCE_DIR}/rootfs ${CMAKE_BINARY_DIR}/
     CONFIGURE_COMMAND cp -Rfv ${PLATFORM_DIR}/rootfs ${CMAKE_BINARY_DIR}/
     BINARY_DIR ${CMAKE_BINARY_DIR}/rootfs
-    BUILD_COMMAND pwd && sudo ${SKYFORGE_DIR}/skyforge build
-    INSTALL_COMMAND sudo ${SKYFORGE_DIR}/skyforge clean
+    BUILD_COMMAND sudo ${SKYFORGE_DIR}/skyforge build; sudo ${SKYFORGE_DIR}/skyforge clean
+    INSTALL_COMMAND mv rootfs.img ${FIRMWARE_DIR}/system.img
 )
 
 if (DEVICE_CRAPWARE_TYPE STREQUAL "MediaTek")
