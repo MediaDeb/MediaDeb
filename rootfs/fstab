@@ -1,0 +1,6 @@
+/dev/mmcblk0p4  /       ext4    defaults,rw,noatime,nodiratime,discard     0      0
+tmpfs   /var/log        tmpfs   nodev,nosuid,noexec,relatime,size=50M      0      0
+tmpfs   /lib/init/rw    tmpfs   size=16K,rw,nosuid,relatime,mode=0755      0      0
+tmpfs   /var/tmp        tmpfs   size=512K,rw,noexec,nosuid,nodev,mode=1777 0      0
+tmpfs   /tmp            tmpfs   size=512K,rw,noexec,nosuid,nodev,mode=1777 0      0
+

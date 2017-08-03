@@ -19,6 +19,15 @@ if (NOT DEVICE_NAME)
     message("HINT: use -DDEVICE_NAME=name to specify a different device")
 endif()
 
+# Right now this is the only toolchain and it works
+# aarch64 may require a different one, but so far no aarch64 devices
+if (GNU_TARGET_NAME STREQUAL "arm-module-linux-gnueabi")
+    set(TOOLCHAIN_URL https://cloud.ncrmnt.org/index.php/s/7hYjCqbJgMcVYFe/download?path=%2F&files=arm-module-linux-gnueabi.tgz)
+    set(TOOLCHAIN_MD5 eec86847bb0f680814685d64ef2a1ce0)
+    set(TOOLCHAIN_VALID YES)
+endif()
+
+
 set(PLATFORM_DIR ${CMAKE_SOURCE_DIR}/platforms/${DEVICE_NAME})
 include(${PLATFORM_DIR}/platform.cmake)
 
@@ -29,20 +38,25 @@ set(CROSS_COMPILE "${CMAKE_BINARY_DIR}/toolchain-prefix/src/toolchain/bin/${GNU_
 
 message(STATUS "Populating initial initrd directory: ${INITRD_DIR}")
 
-# Right now this is the only toolchain and it works
-# aarch64 may require a different one, but so far no aarch64 devices
-if (GNU_TARGET_NAME STREQUAL "arm-module-linux-gnueabi")
-    set(TOOLCHAIN_URL https://cloud.ncrmnt.org/index.php/s/7hYjCqbJgMcVYFe/download?path=%2F&files=arm-module-linux-gnueabi.tgz)
-    set(TOOLCHAIN_MD5 eec86847bb0f680814685d64ef2a1ce0)
-    set(TOOLCHAIN_VALID YES)
-endif()
+
 
 
 set(FIRMWARE_DIR ${CMAKE_BINARY_DIR}/firmware)
 # Party-time, let's populate directories
-file(COPY "${CMAKE_SOURCE_DIR}/initrd/" DESTINATION ${CMAKE_BINARY_DIR}/initrd)
+file(COPY "${CMAKE_SOURCE_DIR}/initrd/" DESTINATION ${INITRD_DIR})
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/rootfs)
 
+file(MAKE_DIRECTORY
+    ${INITRD_DIR}/dev
+    ${INITRD_DIR}/proc
+    ${INITRD_DIR}/sys
+    ${INITRD_DIR}/mnt
+    ${INITRD_DIR}/tmp
+    ${INITRD_DIR}/usr
+    ${INITRD_DIR}/usr/bin
+    ${INITRD_DIR}/usr/sbin
+)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/rootfs)
 # And add device-specific files
 file(COPY "${PLATFORM_DIR}/skeleton/" DESTINATION ${FIRMWARE_DIR})
 file(COPY "${PLATFORM_DIR}/initrd/" DESTINATION ${CMAKE_BINARY_DIR}/initrd)
@@ -81,14 +95,22 @@ ExternalProject_Add (skyforge
 )
 # TODO: If we're going to support other distros - this should be moved out
 
+set (SKYFORGE_ENV
+    DEBARCH=${DEVICE_DEBARCH}
+    DISTRO=${DEVICE_DISTRO}
+    VARIANT=${DEVICE_ROOT_VARIANT}
+)
+
 ExternalProject_Add (rootfs
     DEPENDS skyforge
     SOURCE_DIR ${CMAKE_BINARY_DIR}/rootfs
     DOWNLOAD_COMMAND cp -Rfv ${CMAKE_SOURCE_DIR}/rootfs ${CMAKE_BINARY_DIR}/
     CONFIGURE_COMMAND cp -Rfv ${PLATFORM_DIR}/rootfs ${CMAKE_BINARY_DIR}/
     BINARY_DIR ${CMAKE_BINARY_DIR}/rootfs
-    BUILD_COMMAND sudo ${SKYFORGE_DIR}/skyforge build; sudo ${SKYFORGE_DIR}/skyforge clean
-    INSTALL_COMMAND mv rootfs.img ${FIRMWARE_DIR}/system.img
+    BUILD_COMMAND
+        sudo ${SKYFORGE_ENV} ${SKYFORGE_DIR}/skyforge build;
+        sudo ${SKYFORGE_ENV} ${SKYFORGE_DIR}/skyforge clean
+    INSTALL_COMMAND mv -f rootfs.img ${FIRMWARE_DIR}/system.img
 )
 
 if (DEVICE_CRAPWARE_TYPE STREQUAL "MediaTek")

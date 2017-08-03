@@ -96,8 +96,9 @@ make
 
 - Make yourself familiar with firmware compilation and packaging process. This may be tricky.
 
-- Add this to the end of the kernel config. This should do the minimal trick.
+- Add this to the end of the kernel config. This should do the minimal trick (See comments for individual parameters)
 ```
+# Systemd will not work without these
 CONFIG_DEVTMPFS=y
 CONFIG_DEVTMPFS_MOUNT=y
 CONFIG_CGROUPS=y
@@ -115,9 +116,13 @@ CONFIG_CRYPTO_SHA256=y
 CONFIG_SYSFS_DEPRECATED=n
 CONFIG_ANDROID_PARANOID_NETWORK=n
 CONFIG_EXT4_FS_XATTR=y
+
+# Needed for iotop to work
+CONFIG_TASKSTATS=y
+CONFIG_TASK_DELAY_ACCT=y
+CONFIG_TASK_IO_ACCOUNTING=y
 ```
 
-- Consult [Systemd README](https://github.com/systemd/systemd/blob/master/README#L34) and add required options for it to work.
 
 - Compile your own kernel
 
