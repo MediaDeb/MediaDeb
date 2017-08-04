@@ -21,15 +21,17 @@ endif()
 
 # Right now this is the only toolchain and it works
 # aarch64 may require a different one, but so far no aarch64 devices
+
+
+
+set(PLATFORM_DIR ${CMAKE_SOURCE_DIR}/platforms/${DEVICE_NAME})
+include(${PLATFORM_DIR}/platform.cmake)
+
 if (GNU_TARGET_NAME STREQUAL "arm-module-linux-gnueabi")
     set(TOOLCHAIN_URL https://cloud.ncrmnt.org/index.php/s/7hYjCqbJgMcVYFe/download?path=%2F&files=arm-module-linux-gnueabi.tgz)
     set(TOOLCHAIN_MD5 eec86847bb0f680814685d64ef2a1ce0)
     set(TOOLCHAIN_VALID YES)
 endif()
-
-
-set(PLATFORM_DIR ${CMAKE_SOURCE_DIR}/platforms/${DEVICE_NAME})
-include(${PLATFORM_DIR}/platform.cmake)
 
 set(INITRD_DIR ${CMAKE_BINARY_DIR}/initrd)
 set(DL_DIR ${CMAKE_SOURCE_DIR}/tarballs)
