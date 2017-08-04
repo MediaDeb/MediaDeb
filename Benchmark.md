@@ -8,6 +8,8 @@
 
 - hdparm measures read performance of the eMMC
 
+- iperf measures the network connectivity speed over usb (eem seems to be the fastest)
+
 - If you think some other benchmarking tools are worth running - open an issue at github
 
 ## How to run the tests on your device
@@ -366,6 +368,18 @@ root@eldershade:~# hdparm -Tt /dev/mmcblk0p4
  Timing buffered disk reads: 148 MB in  3.01 seconds =  49.21 MB/sec
 ```
 
+- iperf
+```
+root@eldershade:~# iperf -c invyl.home
+------------------------------------------------------------
+Client connecting to invyl.home, TCP port 5001
+TCP window size: 20.7 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.143.190 port 37166 connected with 192.168.143.3 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec   221 MBytes   185 Mbits/sec
+```
+
 ## MT6589
 
 ### UMI-X2
@@ -691,4 +705,17 @@ dsa  512 bits 0.000633s -9.880000s   1579.4     -0.1
 /dev/mmcblk0p4:
  Timing cached reads:   636 MB in  2.00 seconds = 317.97 MB/sec
  Timing buffered disk reads: 182 MB in  3.02 seconds =  60.26 MB/sec
+```
+
+- iperf (cdc_eem)
+
+```
+root@eldershade:/# iperf -c invyl.home
+------------------------------------------------------------
+Client connecting to invyl.home, TCP port 5001
+TCP window size: 20.7 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.143.160 port 44537 connected with 192.168.143.3 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec  40.1 MBytes  33.7 Mbits/sec
 ```
