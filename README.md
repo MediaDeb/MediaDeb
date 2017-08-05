@@ -38,7 +38,7 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 |          |               | Kernel          | 3.4.67      |
 |          |               | WiFi            | ?           |
 |          |               | Display         | NO          |
-|          |               | Battery Hack*   | NO          |
+|          |               | Battery Hack*   | YES         |
 |          |               | USB Client      | YES         |
 |          |               | USB Host        | No, possible|
 |          |               | UART            | NO           |
