@@ -4,12 +4,11 @@
     - [*]  Better eMMC partitioning
     - [*]  Optimized eMMC usage: tmfs for /tmp
     - [*]  Optimized eMMC usage: journald in-ram logging
-    - [ ]  kernel: iotop support
+    - [*]  kernel: iotop support for umi-x2
+    - [ ]  kernel: iotop support for iocean-x8
     - [*]  Added Benchmark.md
-    - [*]  Add support for various multistrap distro variants
     - [*]  Add support for multiple multistrap distro variants
     - [*]  Add 'devel' distro variant
-    - [*]  Add 'jenkins' distro variant
     - [*]  Add raspbian armhf distro 
     - [*]  UMI-X2: Wireless LAN Support
     - [ ]  Added CI monthly builds
