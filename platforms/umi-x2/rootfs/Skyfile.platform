@@ -12,9 +12,8 @@ RUN "echo ttyMT0 >> /etc/securetty"
 RUN "echo ttyGS0 >> /etc/securetty"
 
 #Install WIFI support packages
-RUN wget https://github.com/MediaDeb/android_hardware_mediatek/files/1203157/mtk-wifi-debs.zip -O 1.zip
-RUN unzip 1.zip
-RUN dpkg -i deb/*.deb
-RUN rm -Rfv deb/
+ADD_DEB https://github.com/MediaDeb/android_hardware_mediatek/releases/download/0.2/mtk-wifi-firmware_0.1_armhf.deb
+ADD_DEB https://github.com/MediaDeb/android_hardware_mediatek/releases/download/0.2/mtk-wifi-nvram_0.1_armhf.deb
+ADD_DEB https://github.com/MediaDeb/android_hardware_mediatek/releases/download/0.2/mtk-wifi-tools_0.1_armhf.deb
 
 EXT4IMAGE 2GB rootfs.img
