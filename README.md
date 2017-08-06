@@ -17,7 +17,7 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 | MT6589   |  UMI X2       | Supported       | Yes         |
 |          |               | Platform        | umi-x2      |
 |          |               | Kernel          | 3.4.67      |
-|          |               | WiFi            | WiP         |
+|          |               | WiFi            | YES         |
 |          |               | Display         | YES         |
 |          |               | Battery Hack*   | YES         |
 |          |               | USB Client      | YES         |
@@ -25,6 +25,7 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 |          |               | UART            | YES, requires soldering|
 |          |               | FM              | ?           |
 |          |               | BT              | ?           |
+|          |               | GPS             | ?           |
 |          |               | Sound           | ?           |
 |          |               | Camera          | ?           |
 |          |               | Modem           | ?           |
@@ -41,7 +42,8 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 |          |               | Battery Hack*   | YES         |
 |          |               | USB Client      | YES         |
 |          |               | USB Host        | No, possible|
-|          |               | UART            | NO           |
+|          |               | UART            | NO          |
+|          |               | GPS             | ?           |
 |          |               | FM              | ?           |
 |          |               | BT              | ?           |
 |          |               | Sound           | ?           |
