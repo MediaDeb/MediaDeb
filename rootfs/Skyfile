@@ -21,5 +21,8 @@ RUN 'echo "Storage=volatile" >> etc/systemd/journald.conf'
 RUN 'echo "Compress=yes" >> etc/systemd/journald.conf'
 RUN 'echo "RuntimeMaxUse=8M" >> etc/systemd/journald.conf'
 
+# Make sure we have a valid resolv.conf from now on
+INSTALL /etc/resolv.conf
 
+# Include platform stuff
 INCLUDE Skyfile.platform
