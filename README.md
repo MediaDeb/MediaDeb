@@ -1,4 +1,5 @@
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/MediaDeb)
+[![Build Status](https://jenkins.ncrmnt.org/job/GithubCI/job/MediaDeb/badge/icon)](https://jenkins.ncrmnt.org/job/GithubCI/job/MediaDeb/)
 
 # What is MediaDeb ?
 
