@@ -23,7 +23,9 @@ RUN rm /etc/apt/apt.conf.d/docker-gzip-indexes
 
 # Linaro abe build deps
 RUN apt-get install -y --force-yes bison automake autoconf libtool libncurses-dev gawk gcc-multilib g++-multilib zlib1g-dev flex autogen texinfo libpython2.7-dev dejagnu mingw-w64 zip
-RUN apt-get install -y --force-yes  qemu-user-static
+
+#Qemu & cmake
+RUN apt-get install -y --force-yes  qemu-user-static cmake
 
 # Create passwd and group if needed, make them world-writable
 # Jenkins will need to fill in uid/gid there.
@@ -37,4 +39,3 @@ RUN chmod 777 /etc/group
 RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 ENTRYPOINT ["/bin/bash", "--login"]
-
