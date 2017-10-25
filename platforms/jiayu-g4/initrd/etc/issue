@@ -1,0 +1,18 @@
+                   _..-------++._                    
+              _.-'/ |      _||  \"--._              
+        __.--'`._/_\j_____/_||___\    `----.        
+   _.--'_____    |          \     _____    /        
+ _j    /,---.\   |        =o |   /,---.\   |_       
+[__]==// .-. \\==`===========/==// .-. \\=[__]      
+  `-._|\ `-' /|___\_________/___|\ `-' /|_.'     hjw
+        `---'                     `---'             
+    Welcome to MediaDeb emergency initrd for Jiayu G4!
+    Helpfull commands:
+        
+    ums  - Will export both SD cards to PC as mass storage
+    exit - Will terminate the shell and resume boot
+
+Login with username 'root' and empty password or wait 10 seconds 
+for the system to resume boot. 
+
+
