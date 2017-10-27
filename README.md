@@ -35,6 +35,26 @@ MediaDeb is a hacky effort to port a recent Debian to run on a mediatek phone. N
 
 | SoC      |   Device      | Feature         | Status      |
 |----------|:-------------:|:----------------|------------:|
+| MT6589   |  JIAYU G4     | Supported       | Yes         |
+|          |               | Platform        | jiayu-g4    |
+|          |               | Kernel          | 3.4.67      |
+|          |               | WiFi            | YES         |
+|          |               | Display         | ?           |
+|          |               | Battery Hack*   | YES         |
+|          |               | USB Client      | YES         |
+|          |               | USB Host        | No, possible|
+|          |               | UART            | YES, requires soldering|
+|          |               | FM              | ?           |
+|          |               | BT              | ?           |
+|          |               | GPS             | ?           |
+|          |               | Sound           | ?           |
+|          |               | Camera          | ?           |
+|          |               | Modem           | ?           |
+|          |               | Magnetometer    | ?           |
+|          |               | Flashlight      | ?           |
+
+| SoC      |   Device      | Feature         | Status      |
+|----------|:-------------:|:----------------|------------:|
 | MT6592   |  iOcean X8    | Supported       | Yes         |
 |          |               | Platform        | iocean-x8   |
 |          |               | Kernel          | 3.4.67      |
@@ -70,6 +90,9 @@ for the battery from 4-4.2 volts to 3.7-3.8 volts. This allows to avoid 'bloatin
 ```
 git clone https://github.com/nekromant/MediaDeb.git
 ```
+
+docker run --rm --privileged multiarch/qemu-user-static:register
+
 
 - Create a build directory and configure the build
 
